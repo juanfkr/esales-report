@@ -38,4 +38,6 @@ Simular um cenário real de processamentos de dados por meio de um workflow de: 
 ## Estrutura do projeto (em construção...)
 
 
+A pasta src/data/ contém um exemplar de CSV utilizado para testes da aplicação
+
 Este é um projeto puramente para fins de aprendizado, sinta-se livre para contribuir!
