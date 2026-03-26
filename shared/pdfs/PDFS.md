@@ -1,0 +1,1 @@
+shared/pdfs é o diretório alvo dos PDFs gerados
