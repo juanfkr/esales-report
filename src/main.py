@@ -1,7 +1,7 @@
 from pathlib import Path
-from services.pdf_generator_service import PdfGeneratorService
-from services.dataframe_service import DataFrameService
-from core.path_handler import PathHandler
+from pdf_generator_service import PdfGeneratorService
+from dataframe_service import DataFrameService
+from path_handler import PathHandler
 
 path_handler = PathHandler()
 
