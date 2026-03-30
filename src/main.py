@@ -1,16 +1,14 @@
-from pathlib import Path
-from pdf_generator_service import PdfGeneratorService
-from dataframe_service import DataFrameService
+# python modules
+
+# core modules
 from path_handler import PathHandler
 
-path_handler = PathHandler()
+# service modules
+from dataframe_service import DataFrameService
 
-PDFS_DIRECTORY: Path = path_handler.get_directory("shared/pdfs")
-SHEETS_DIRECTORY: Path = path_handler.get_directory("shared/sheets")
-
-pdf_generator = PdfGeneratorService(f"{PDFS_DIRECTORY}/teste.pdf")
-
-pdf_generator.generate_pdf("teste")
+# caminhos absolutos de pdfs e planilhas
+PDFS_DIRECTORY = PathHandler.get_directory("shared/pdfs")
+SHEETS_DIRECTORY = PathHandler.get_directory("shared/sheetsu")
 
 df = DataFrameService()
 df.csv_to_dataframe(f"{SHEETS_DIRECTORY}/Amazon-sales.csv")

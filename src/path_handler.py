@@ -1,14 +1,17 @@
 from pathlib import Path
 
-
 class PathHandler:
-    def __init__(self):
-        self.PROJECT_DIRECTORY = Path(__file__)
-        self.CURRENT_DIRECTORY = self.PROJECT_DIRECTORY.resolve()
+    CURRENT_DIRECTORY = Path(__file__).resolve().parent
     
-    def get_directory(self, target: str) -> Path:
-        for parent in self.CURRENT_DIRECTORY.parents:
-            target_dir = parent/target
+    @staticmethod
+    def get_directory(target: str) -> Path:
+        """retorna o diretório especificado"""
+        path = Path(target)
 
-            if target_dir.exists():
-                return target_dir
+        if not type(target) is str:
+            raise(ValueError("Diretório inválido"))
+        
+        if not path.exists():
+            raise(FileNotFoundError("Diretório não encontrado"))
+
+        return path
