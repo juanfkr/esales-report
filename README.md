@@ -91,7 +91,7 @@ O relatório PDF inclui:
 $ python src/main.py --month 1 --year 2023
 ✓ 15 registros carregados
 ✓ Métricas calculadas
-✓ PDF gerado: /home/juan/projects/esales-report/shared/pdfs/relatorio_01_2023.pdf
+✓ PDF gerado: /seu-diretorio/esales-report/shared/pdfs/relatorio_01_2023.pdf
 ```
 
 ## Contribuindo
