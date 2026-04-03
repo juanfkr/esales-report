@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  esales-report:
+    build: .
+    volumes:
+      - ./shared/sheets:/app/shared/sheets
+      - ./shared/pdfs:/app/shared/pdfs
+    environment:
+      - PYTHONUNBUFFERED=1
