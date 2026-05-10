@@ -8,9 +8,8 @@ Simular um cenário real de processamento de dados por meio de um workflow compl
 
 ## Tecnologias, ferramentas e recursos utilizados
 
-- **Pandas** - manipulação e análise de dados
-- **WeasyPrint** - geração de PDF's com base em HTML/CSS
-- **Poetry 2.3.2** - gerenciador de dependências Python
+- **Pandas 3.0.2** - manipulação e análise de dados
+- **WeasyPrint 68.1** - geração de PDF's com base em HTML/CSS
 - **Python 3.14** - linguagem base
 - **Docker** - containerização da aplicação
 - **Kaggle** - datasets reais para testes
@@ -20,12 +19,12 @@ Simular um cenário real de processamento de dados por meio de um workflow compl
 - Leitura de arquivos CSV com validação de caminho
 - Sanitização automática: duplicatas, valores nulos, conversão de tipos
 - Cálculo de métricas: receita, ticket médio, taxa de entrega, top categorias/marcas/países
-- Geração de relatórios PDF com tabelas, gráficos e resumo financeiro
+- Geração de relatórios PDF com tabelas e resumo financeiro
 - Filtro por período (mês/ano)
 
 ## Executar o projeto
 
-### Opção 1: Instalação Local
+### Opção 1: Instalação Local com venv
 
 #### 1. Clone o repositório
 ```bash
@@ -33,11 +32,11 @@ git clone https://github.com/seu-usuario/esales-report.git
 cd esales-report
 ```
 
-#### 2. Instalar Poetry e dependências
+#### 2. Criar ambiente virtual e instalar dependências
 ```bash
-curl -sSL https://install.python-poetry.org | python3 -
-poetry --version   # verificar versão 2.3.2+
-poetry install     # instala pandas e weasyprint
+python3 -m venv .venv
+source .venv/bin/activate  # No Windows: .venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
 #### 3. Executar a aplicação
@@ -87,31 +86,6 @@ docker run --rm -v $(pwd)/shared/pdfs:/app/shared/pdfs esales-report --month 1 -
 docker run --rm -v $(pwd)/shared:/app/shared esales-report --csv shared/sheets/custom.csv --month 6 --year 2023
 ```
 
-### Opção 3: Com Docker Compose (Recomendado)
-
-#### 1. Clone o repositório
-```bash
-git clone https://github.com/seu-usuario/esales-report.git
-cd esales-report
-```
-
-#### 2. Executar com docker-compose
-
-**Gerar relatório completo (todos os dados):**
-```bash
-docker-compose run --rm esales-report
-```
-
-**Gerar relatório de período específico:**
-```bash
-docker-compose run --rm esales-report --month 1 --year 2023
-```
-
-**Com CSV customizado:**
-```bash
-docker-compose run --rm esales-report --csv shared/sheets/custom.csv --month 6 --year 2023
-```
-
 ## Estrutura do projeto
 
 ```
@@ -126,10 +100,9 @@ esales-report/
 │   ├── sheets/
 │   │   └── Amazon-sales.csv       # exemplo de dataset
 │   └── pdfs/                      # saída dos relatórios gerados
+├── .venv/                         # ambiente virtual Python
 ├── Dockerfile
-├── docker-compose.yml
-├── poetry.lock
-├── pyproject.toml
+├── requirements.txt
 └── README.md
 ```
 
@@ -147,19 +120,14 @@ O relatório PDF inclui:
 ## Exemplo de uso
 
 ```bash
-# Gerar relatório de janeiro de 2023 (Local)
+# Ativar ambiente virtual
+source .venv/bin/activate
+
+# Gerar relatório de janeiro de 2023
 $ python src/main.py --month 1 --year 2023
 ✓ 15 registros carregados
 ✓ Métricas calculadas
 ✓ PDF gerado: /seu-diretorio/esales-report/shared/pdfs/relatorio_01_2023.pdf
-```
-
-```bash
-# Gerar relatório de janeiro de 2023 (Docker Compose)
-$ docker-compose run --rm esales-report --month 1 --year 2023
-✓ 15 registros carregados
-✓ Métricas calculadas
-✓ PDF gerado: /app/shared/pdfs/relatorio_01_2023.pdf
 ```
 
 ## Contribuindo
