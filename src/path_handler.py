@@ -1,15 +1,20 @@
 from pathlib import Path
 
-class PathHandler:    
-    @staticmethod
-    def get_directory(target: str) -> Path:
-        """retorna o diretório especificado"""
-        path = Path(target)
+def get_directory(target: str) -> Path:
+    path = Path(target)
 
-        if not type(target) is str:
-            raise(ValueError("Diretório deve ser uma string"))
+    if type(target) is not str:
+        raise(ValueError("Diretório deve ser uma string"))
         
-        if not path.exists():
-            raise(FileNotFoundError("Diretório não encontrado"))
+    if not path.exists():
+        raise(FileNotFoundError("Diretório não encontrado"))
 
-        return path
+    return path
+
+def check_file_extension(file: Path):
+    if file.suffix == ".csv":
+        return "csv"
+    elif file.suffix == ".xlsx":
+        return "xlsx"
+    
+    raise(ValueError("Formato de arquivo não suportado"))
