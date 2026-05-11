@@ -1,9 +1,7 @@
 FROM python:3.14-slim
 
-# Definir diretório de trabalho
 WORKDIR /app
 
-# Instalar dependências do sistema necessárias para WeasyPrint
 RUN apt-get update && apt-get install -y \
     libpango-1.0-0 \
     libpango1.0-dev \
@@ -12,23 +10,14 @@ RUN apt-get update && apt-get install -y \
     libcairo2 \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar Poetry
-RUN pip install --no-cache-dir poetry==2.3.2
+COPY requirements.txt .
 
-# Copiar arquivos de dependências
-COPY pyproject.toml poetry.lock ./
+RUN python -m pip install --no-cache-dir -r requirements.txt
 
-# Instalar dependências do projeto
-RUN poetry config virtualenvs.create false && \
-    poetry install --no-interaction --no-ansi
-
-# Copiar código fonte
 COPY src/ ./src/
 COPY shared/ ./shared/
 
-# Criar diretório para saída de PDFs se não existir
 RUN mkdir -p shared/pdfs
 
-# Comando padrão
 ENTRYPOINT ["python", "src/main.py"]
 CMD []
