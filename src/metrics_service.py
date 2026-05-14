@@ -1,5 +1,4 @@
 import pandas as pd
-from datetime import datetime
 
 class MetricsService:
     def __init__(self, dataframe: pd.DataFrame):

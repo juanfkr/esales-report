@@ -1,6 +1,5 @@
-from weasyprint import HTML, CSS
+from weasyprint import HTML
 from datetime import datetime
-import json
 
 class ReportGenerator:
     def __init__(self, metrics: dict):
