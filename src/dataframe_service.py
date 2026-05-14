@@ -1,13 +1,38 @@
 import pandas as pd
 from pandas import read_csv, DataFrame
-from datetime import datetime
+from pathlib import Path
+from column_aliases import normalize_columns, validate_columns
 
 class DataFrameService:
     def __init__(self):
         self.dataframe: DataFrame | None = None
 
+    def load_dataframe(self, file_path: str) -> None:
+        """
+        Carrega um arquivo (CSV ou XLSX) automaticamente baseado na extensão.
+        
+        Args:
+            file_path: Caminho do arquivo
+            
+        Raises:
+            ValueError: Se a extensão não é suportada
+        """
+        path = Path(file_path)
+        extension = path.suffix.lower()
+        
+        if extension == ".csv":
+            self.csv_to_dataframe(file_path)
+        elif extension in [".xlsx", ".xls"]:
+            self.xlsx_to_dataframe(file_path)
+        else:
+            raise ValueError(f"Extensão de arquivo não suportada: {extension}")
+
     def csv_to_dataframe(self, csv: str) -> None:
-        self.dataframe = read_csv(csv, usecols=[
+        self.dataframe = read_csv(csv)
+        # Normaliza nomes de colunas
+        self.dataframe = normalize_columns(self.dataframe)
+        # Seleciona e reordena colunas padrão
+        self.dataframe = self.dataframe[[
             "OrderID",
             "OrderDate",
             "ProductID",
@@ -25,7 +50,33 @@ class DataFrameService:
             "City",
             "State",
             "Country"
-        ])
+        ]]
+        self.sanitize()
+
+    def xlsx_to_dataframe(self, xlsx: str) -> None:
+        self.dataframe = pd.read_excel(xlsx)
+        # Normaliza nomes de colunas
+        self.dataframe = normalize_columns(self.dataframe)
+        # Seleciona e reordena colunas padrão
+        self.dataframe = self.dataframe[[
+            "OrderID",
+            "OrderDate",
+            "ProductID",
+            "ProductName",
+            "Category",
+            "Brand",
+            "Quantity",
+            "UnitPrice",
+            "Discount",
+            "Tax",
+            "ShippingCost",
+            "TotalAmount",
+            "PaymentMethod",
+            "OrderStatus",
+            "City",
+            "State",
+            "Country"
+        ]]
         self.sanitize()
 
     def sanitize(self) -> None:
